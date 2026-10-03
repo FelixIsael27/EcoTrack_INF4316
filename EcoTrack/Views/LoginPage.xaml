@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EcoTrack.Views.LoginPage"
+             Title="Iniciar Sesión"
+             BackgroundColor="{StaticResource Pino}">
+    <ScrollView>
+        <Grid RowDefinitions="Auto,*">
+
+            <!-- Cabecera: la marca sobre el verde pino -->
+            <Grid Grid.Row="0"
+                  Padding="28,56,28,44"
+                  RowDefinitions="Auto,Auto,Auto"
+                  RowSpacing="14">
+
+                <Image Grid.Row="0"
+                       Source="marca.png"
+                       HeightRequest="56"
+                       HorizontalOptions="Start" />
+
+                <Label Grid.Row="1"
+                       Text="EcoTrack"
+                       FontSize="34"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource Blanco}" />
+
+                <Label Grid.Row="2"
+                       Text="Anota lo que haces cada día y mira cuánto CO₂ dejas de emitir."
+                       MaximumWidthRequest="360"
+                       HorizontalOptions="Start"
+                       TextColor="#A9C3B4" />
+            </Grid>
+
+            <!-- Hoja blanca con el acceso -->
+            <Border Grid.Row="1"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Superficie}, Dark={StaticResource SuperficieOscura}}"
+                    Stroke="Transparent"
+                    StrokeThickness="0"
+                    Padding="{OnIdiom Phone='24,32,24,36', Tablet='48,44,48,48', Desktop='48,44,48,48'}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="26,26,0,0" />
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="18"
+                                     MaximumWidthRequest="460"
+                                     HorizontalOptions="Fill">
+
+                    <Label Text="Entra a tu perfil"
+                           Style="{StaticResource Titulo}" />
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Correo" Style="{StaticResource Etiqueta}" />
+                        <Border Style="{StaticResource Campo}">
+                            <Entry Placeholder="tucorreo@ejemplo.com"
+                                   Keyboard="Email" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Contraseña" Style="{StaticResource Etiqueta}" />
+                        <Border Style="{StaticResource Campo}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Entry Grid.Column="0"
+                                       Placeholder="Tu contraseña"
+                                       IsPassword="True" />
+                                <Button Grid.Column="1"
+                                        Text="Mostrar"
+                                        Style="{StaticResource BotonTexto}"
+                                        VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <Button Text="¿Olvidaste tu contraseña?"
+                            Style="{StaticResource BotonTexto}"
+                            HorizontalOptions="End" />
+
+                    <Button Text="Entrar"
+                            Style="{StaticResource BotonPrimario}"
+                            Clicked="AlEntrar" />
+
+                    <Grid ColumnDefinitions="*,Auto,*"
+                          ColumnSpacing="12"
+                          Margin="0,4">
+                        <BoxView Grid.Column="0" Style="{StaticResource Separador}" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="o" Style="{StaticResource Apoyo}" />
+                        <BoxView Grid.Column="2" Style="{StaticResource Separador}" VerticalOptions="Center" />
+                    </Grid>
+
+                    <Button Text="Crear un perfil nuevo"
+                            Style="{StaticResource BotonSecundario}" />
+
+                    <Label Text="Al entrar aceptas que tus registros se guarden solo en este dispositivo."
+                           Style="{StaticResource Apoyo}"
+                           HorizontalTextAlignment="Center"
+                           Margin="0,8,0,0" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </ScrollView>
+</ContentPage>

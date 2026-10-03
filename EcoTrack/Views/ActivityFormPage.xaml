@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EcoTrack.Views.ActivityFormPage"
+             Title="Nueva Actividad"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+    <ContentPage.Resources>
+        <Style x:Key="ChipCategoria" TargetType="Border">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Superficie}, Dark={StaticResource SuperficieOscura}}" />
+            <Setter Property="Stroke"
+                    Value="{AppThemeBinding Light={StaticResource Borde}, Dark={StaticResource BordeOscuro}}" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="Padding" Value="14,12" />
+            <Setter Property="StrokeShape">
+                <Setter.Value>
+                    <RoundRectangle CornerRadius="14" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Cabecera -->
+        <Grid Grid.Row="0"
+              Padding="{OnIdiom Phone='20,52,20,12', Tablet='40,56,40,14', Desktop='40,48,40,14'}"
+              ColumnDefinitions="*,Auto">
+            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                <Label Text="Nueva actividad" Style="{StaticResource Display}" />
+                <Label Text="Anota lo que hiciste y EcoTrack calcula el ahorro." Style="{StaticResource Apoyo}" />
+            </VerticalStackLayout>
+            <Button Grid.Column="1"
+                    Text="Cerrar"
+                    Style="{StaticResource BotonTexto}"
+                    VerticalOptions="Start"
+                    Clicked="AlCerrar" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="{OnIdiom Phone='20,8,20,20', Tablet='40,10,40,24', Desktop='40,10,40,24'}"
+                                 Spacing="22"
+                                 MaximumWidthRequest="680">
+
+                <!-- Categoría -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Categoría" Style="{StaticResource Etiqueta}" />
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+
+                        <Border Grid.Column="0"
+                                Style="{StaticResource ChipCategoria}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource HojaClara}, Dark=#18332A}"
+                                Stroke="{StaticResource Hoja}"
+                                StrokeThickness="2">
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                <Image Source="cat_transporte.png" HeightRequest="26" />
+                                <Label Text="Transporte" FontSize="{StaticResource TxApoyo}" FontAttributes="Bold" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Column="1" Style="{StaticResource ChipCategoria}">
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                <Image Source="cat_energia.png" HeightRequest="26" />
+                                <Label Text="Energía" FontSize="{StaticResource TxApoyo}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Column="2" Style="{StaticResource ChipCategoria}">
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                <Image Source="cat_residuos.png" HeightRequest="26" />
+                                <Label Text="Residuos" FontSize="{StaticResource TxApoyo}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- Descripción -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Actividad" Style="{StaticResource Etiqueta}" />
+                    <Border Style="{StaticResource Campo}">
+                        <Entry Placeholder="Ej.: Uso de bicicleta al trabajo" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Cantidad y unidad -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Impacto registrado" Style="{StaticResource Etiqueta}" />
+                    <Grid ColumnDefinitions="*,140" ColumnSpacing="10">
+                        <Border Grid.Column="0" Style="{StaticResource Campo}">
+                            <Entry Placeholder="0" Keyboard="Numeric" />
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource Campo}" Padding="10,2">
+                            <Picker Title="Unidad" SelectedIndex="0">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>km recorridos</x:String>
+                                        <x:String>kWh ahorrados</x:String>
+                                        <x:String>kg reciclados</x:String>
+                                        <x:String>horas</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </Border>
+                    </Grid>
+                    <Label Text="Usa la unidad que corresponda a la categoría elegida."
+                           Style="{StaticResource Apoyo}"
+                           Margin="2,2,0,0" />
+                </VerticalStackLayout>
+
+                <!-- Fecha -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Fecha" Style="{StaticResource Etiqueta}" />
+                    <Border Style="{StaticResource Campo}">
+                        <DatePicker Format="dd/MM/yyyy" VerticalOptions="Center" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Foto -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Foto del registro" Style="{StaticResource Etiqueta}" />
+                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource Superficie}, Dark={StaticResource SuperficieOscura}}"
+                            Stroke="{AppThemeBinding Light={StaticResource Borde}, Dark={StaticResource BordeOscuro}}"
+                            StrokeThickness="1.5"
+                            StrokeDashArray="8,5"
+                            StrokeDashOffset="0"
+                            Padding="20"
+                            HeightRequest="150">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="14" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                            <Image Source="camara.png" HeightRequest="30" />
+                            <Label Text="Añade una foto de la actividad" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <Label Text="Toma una foto o elige una de tu galería" Style="{StaticResource Apoyo}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Nota -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Nota (opcional)" Style="{StaticResource Etiqueta}" />
+                    <Border Style="{StaticResource Campo}" Padding="12,6">
+                        <Editor Placeholder="Algún detalle que quieras recordar"
+                                HeightRequest="90" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Vista previa del cálculo -->
+                <Border Style="{StaticResource Panel}" Padding="18">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                            <Label Text="Ahorro estimado" Style="{StaticResource ApoyoClaro}" />
+                            <Label Text="Se calcula al guardar" TextColor="{StaticResource Blanco}" FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="1"
+                               Text="— kg CO₂"
+                               TextColor="{StaticResource Lima}"
+                               FontSize="{StaticResource TxSubtitulo}"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Acciones -->
+        <Border Grid.Row="2"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Papel}, Dark={StaticResource PapelOscuro}}"
+                Stroke="Transparent"
+                StrokeThickness="0"
+                Padding="{OnIdiom Phone='20,8,20,16', Tablet='40,10,40,20', Desktop='40,10,40,20'}">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" MaximumWidthRequest="680">
+                <Button Grid.Column="0"
+                        Text="Cancelar"
+                        Style="{StaticResource BotonSecundario}"
+                        WidthRequest="120"
+                        Clicked="AlCerrar" />
+                <Button Grid.Column="1"
+                        Text="Guardar actividad"
+                        Style="{StaticResource BotonPrimario}" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

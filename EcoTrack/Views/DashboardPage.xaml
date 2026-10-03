@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EcoTrack.Views.DashboardPage"
+             Title="Inicio">
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView Grid.Row="0">
+            <Grid Padding="{OnIdiom Phone='20,52,20,24', Tablet='40,56,40,32', Desktop='40,48,40,32'}"
+                  MaximumWidthRequest="820"
+                  HorizontalOptions="Fill"
+                  RowSpacing="22"
+                  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+
+                <!-- Saludo -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                        <Label Text="Hola, Diany" Style="{StaticResource Display}" />
+                        <Label Text="Domingo 20 de Septiembre" Style="{StaticResource Apoyo}" />
+                    </VerticalStackLayout>
+
+                    <Border Grid.Column="1"
+                            BackgroundColor="{StaticResource HojaClara}"
+                            Stroke="Transparent"
+                            HeightRequest="46"
+                            WidthRequest="46"
+                            Padding="0"
+                            VerticalOptions="Start">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="23" />
+                        </Border.StrokeShape>
+                        <Label Text="A"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource Hoja}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+
+                <!-- Dato principal de la semana -->
+                <Border Grid.Row="1" Style="{StaticResource Panel}">
+                    <VerticalStackLayout Spacing="18">
+
+                        <Label Text="Huella evitada esta semana" Style="{StaticResource ApoyoClaro}" />
+
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="End">
+                            <Label Text="8,4" Style="{StaticResource Cifra}" />
+                            <Label Text="kg CO₂"
+                                   TextColor="{StaticResource Lima}"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="End"
+                                   Margin="0,0,0,6" />
+                        </HorizontalStackLayout>
+
+                        <Label Text="1,2 kg más que la semana pasada."
+                               TextColor="#A9C3B4"
+                               FontSize="{StaticResource TxApoyo}" />
+
+                        <!-- Semana: una barra por día -->
+                        <Grid ColumnDefinitions="*,*,*,*,*,*,*"
+                              ColumnSpacing="8"
+                              HeightRequest="96">
+
+                            <Grid Grid.Column="0" RowDefinitions="*,Auto" RowSpacing="8">
+                                <BoxView Grid.Row="0" Color="#3C6A55" CornerRadius="6" HeightRequest="34" VerticalOptions="End" />
+                                <Label Grid.Row="1" Text="L" Style="{StaticResource ApoyoClaro}" HorizontalOptions="Center" />
+                            </Grid>
+                            <Grid Grid.Column="1" RowDefinitions="*,Auto" RowSpacing="8">
+                                <BoxView Grid.Row="0" Color="#3C6A55" CornerRadius="6" HeightRequest="52" VerticalOptions="End" />
+                                <Label Grid.Row="1" Text="M" Style="{StaticResource ApoyoClaro}" HorizontalOptions="Center" />
+                            </Grid>
+                            <Grid Grid.Column="2" RowDefinitions="*,Auto" RowSpacing="8">
+                                <BoxView Grid.Row="0" Color="#3C6A55" CornerRadius="6" HeightRequest="28" VerticalOptions="End" />
+                                <Label Grid.Row="1" Text="M" Style="{StaticResource ApoyoClaro}" HorizontalOptions="Center" />
+                            </Grid>
+                            <Grid Grid.Column="3" RowDefinitions="*,Auto" RowSpacing="8">
+                                <BoxView Grid.Row="0" Color="#3C6A55" CornerRadius="6" HeightRequest="61" VerticalOptions="End" />
+                                <Label Grid.Row="1" Text="J" Style="{StaticResource ApoyoClaro}" HorizontalOptions="Center" />
+                            </Grid>
+                            <Grid Grid.Column="4" RowDefinitions="*,Auto" RowSpacing="8">
+                                <BoxView Grid.Row="0" Color="#3C6A55" CornerRadius="6" HeightRequest="44" VerticalOptions="End" />
+                                <Label Grid.Row="1" Text="V" Style="{StaticResource ApoyoClaro}" HorizontalOptions="Center" />
+                            </Grid>
+                            <Grid Grid.Column="5" RowDefinitions="*,Auto" RowSpacing="8">
+                                <BoxView Grid.Row="0" Color="#3C6A55" CornerRadius="6" HeightRequest="18" VerticalOptions="End" />
+                                <Label Grid.Row="1" Text="S" Style="{StaticResource ApoyoClaro}" HorizontalOptions="Center" />
+                            </Grid>
+                            <Grid Grid.Column="6" RowDefinitions="*,Auto" RowSpacing="8">
+                                <BoxView Grid.Row="0" Color="{StaticResource Lima}" CornerRadius="6" HeightRequest="70" VerticalOptions="End" />
+                                <Label Grid.Row="1" Text="D" TextColor="{StaticResource Lima}" FontSize="{StaticResource TxApoyo}" FontAttributes="Bold" HorizontalOptions="Center" />
+                            </Grid>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Desglose por categoría -->
+                <Grid Grid.Row="2"
+                      ColumnDefinitions="*,*,*"
+                      ColumnSpacing="12">
+
+                    <Border Grid.Column="0" Style="{StaticResource Tarjeta}" Padding="14">
+                        <Grid ColumnDefinitions="3,*" ColumnSpacing="10">
+                            <BoxView Grid.Column="0" Color="{StaticResource Transporte}" CornerRadius="2" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Transporte" Style="{StaticResource Apoyo}" />
+                                <Label Text="42" Style="{StaticResource Subtitulo}" />
+                                <Label Text="km limpios" Style="{StaticResource Apoyo}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="1" Style="{StaticResource Tarjeta}" Padding="14">
+                        <Grid ColumnDefinitions="3,*" ColumnSpacing="10">
+                            <BoxView Grid.Column="0" Color="{StaticResource Energia}" CornerRadius="2" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Energía" Style="{StaticResource Apoyo}" />
+                                <Label Text="18" Style="{StaticResource Subtitulo}" />
+                                <Label Text="kWh ahorrados" Style="{StaticResource Apoyo}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="2" Style="{StaticResource Tarjeta}" Padding="14">
+                        <Grid ColumnDefinitions="3,*" ColumnSpacing="10">
+                            <BoxView Grid.Column="0" Color="{StaticResource Residuos}" CornerRadius="2" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Residuos" Style="{StaticResource Apoyo}" />
+                                <Label Text="6,5" Style="{StaticResource Subtitulo}" />
+                                <Label Text="kg reciclados" Style="{StaticResource Apoyo}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- Consejo del día -->
+                <Border Grid.Row="3"
+                        Style="{StaticResource Tarjeta}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource HojaClara}, Dark=#18332A}"
+                        Stroke="{AppThemeBinding Light=#CBE3D5, Dark=#27392F}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Image Grid.Column="0"
+                               Source="marca.png"
+                               HeightRequest="30"
+                               VerticalOptions="Start" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="Consejo de hoy" Style="{StaticResource Subtitulo}" />
+                            <Label Text="Lavar la ropa con agua fría usa hasta 80% menos energía que con agua caliente. Un lavado a 30° evita cerca de 0,6 kg de CO₂." />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Últimos registros -->
+                <Grid Grid.Row="4" ColumnDefinitions="*,Auto">
+                    <Label Grid.Column="0" Text="Últimos registros" Style="{StaticResource Titulo}" />
+                    <Button Grid.Column="1"
+                            Text="Ver historial"
+                            Style="{StaticResource BotonTexto}"
+                            VerticalOptions="Center"
+                            Clicked="AlVerHistorial" />
+                </Grid>
+
+                <VerticalStackLayout Grid.Row="5" Spacing="10">
+
+                    <Border Style="{StaticResource Tarjeta}" Padding="14">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Image Grid.Column="0" Source="cat_transporte.png" HeightRequest="26" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Uso de bicicleta" FontAttributes="Bold" />
+                                <Label Text="5 km · hoy, 7:10 a. m." Style="{StaticResource Apoyo}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="−1,2 kg" TextColor="{StaticResource Hoja}" FontAttributes="Bold" VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+
+                    <Border Style="{StaticResource Tarjeta}" Padding="14">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Image Grid.Column="0" Source="cat_residuos.png" HeightRequest="26" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Compostaje doméstico" FontAttributes="Bold" />
+                                <Label Text="2,3 kg · ayer, 6:40 p. m." Style="{StaticResource Apoyo}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="−0,9 kg" TextColor="{StaticResource Hoja}" FontAttributes="Bold" VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+
+                    <Border Style="{StaticResource Tarjeta}" Padding="14">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Image Grid.Column="0" Source="cat_energia.png" HeightRequest="26" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Apagado de aires 3 h" FontAttributes="Bold" />
+                                <Label Text="4,5 kWh · ayer, 2:00 p. m." Style="{StaticResource Apoyo}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="−2,1 kg" TextColor="{StaticResource Hoja}" FontAttributes="Bold" VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+
+        <!-- Acción principal, siempre visible -->
+        <Border Grid.Row="1"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Papel}, Dark={StaticResource PapelOscuro}}"
+                Stroke="Transparent"
+                StrokeThickness="0"
+                Padding="{OnIdiom Phone='20,8,20,16', Tablet='40,10,40,20', Desktop='40,10,40,20'}">
+            <Button Text="Registrar actividad"
+                    Style="{StaticResource BotonPrimario}"
+                    MaximumWidthRequest="820"
+                    Clicked="AlRegistrar" />
+        </Border>
+    </Grid>
+</ContentPage>

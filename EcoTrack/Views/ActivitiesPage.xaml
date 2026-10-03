@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EcoTrack.Views.ActivitiesPage"
+             Title="Actividades">
+    <ContentPage.Resources>
+
+        <!-- Fila del historial: regla de color a la izquierda según categoría -->
+        <Style x:Key="Fila" TargetType="Border">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Superficie}, Dark={StaticResource SuperficieOscura}}" />
+            <Setter Property="Stroke"
+                    Value="{AppThemeBinding Light={StaticResource Borde}, Dark={StaticResource BordeOscuro}}" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="StrokeShape">
+                <Setter.Value>
+                    <RoundRectangle CornerRadius="14" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Fecha" TargetType="Label">
+            <Setter Property="FontSize" Value="{StaticResource TxApoyo}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource TintaSuave}, Dark={StaticResource TintaClaraSuave}}" />
+            <Setter Property="Margin" Value="2,8,0,0" />
+        </Style>
+
+        <Style x:Key="Chip" TargetType="Border">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Superficie}, Dark={StaticResource SuperficieOscura}}" />
+            <Setter Property="Stroke"
+                    Value="{AppThemeBinding Light={StaticResource Borde}, Dark={StaticResource BordeOscuro}}" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="Padding" Value="16,9" />
+            <Setter Property="StrokeShape">
+                <Setter.Value>
+                    <RoundRectangle CornerRadius="20" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Cabecera fija -->
+        <VerticalStackLayout Grid.Row="0"
+                             Padding="{OnIdiom Phone='20,52,20,12', Tablet='40,56,40,14', Desktop='40,48,40,14'}"
+                             Spacing="14">
+
+            <Grid ColumnDefinitions="*,Auto">
+                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                    <Label Text="Tus actividades" Style="{StaticResource Display}" />
+                    <Label Text="24 registros · 31,8 kg de CO₂ evitados" Style="{StaticResource Apoyo}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <Border Style="{StaticResource Campo}" Padding="14,0" MinimumHeightRequest="48">
+                <Entry Placeholder="Buscar una actividad" />
+            </Border>
+
+            <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                <HorizontalStackLayout Spacing="8">
+                    <Border Style="{StaticResource Chip}"
+                            BackgroundColor="{StaticResource Hoja}"
+                            Stroke="{StaticResource Hoja}">
+                        <Label Text="Todas" FontSize="{StaticResource TxApoyo}" FontAttributes="Bold" TextColor="{StaticResource Blanco}" />
+                    </Border>
+                    <Border Style="{StaticResource Chip}">
+                        <Label Text="Transporte" FontSize="{StaticResource TxApoyo}" />
+                    </Border>
+                    <Border Style="{StaticResource Chip}">
+                        <Label Text="Energía" FontSize="{StaticResource TxApoyo}" />
+                    </Border>
+                    <Border Style="{StaticResource Chip}">
+                        <Label Text="Residuos" FontSize="{StaticResource TxApoyo}" />
+                    </Border>
+                    <Border Style="{StaticResource Chip}">
+                        <Label Text="Agua" FontSize="{StaticResource TxApoyo}" />
+                    </Border>
+                </HorizontalStackLayout>
+            </ScrollView>
+        </VerticalStackLayout>
+
+        <!-- Historial -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="{OnIdiom Phone='20,4,20,20', Tablet='40,6,40,24', Desktop='40,6,40,24'}"
+                                 Spacing="10"
+                                 MaximumWidthRequest="820">
+
+                <Label Text="Hoy" Style="{StaticResource Fecha}" />
+
+                <Border Style="{StaticResource Fila}">
+                    <Grid ColumnDefinitions="4,Auto,*,Auto">
+                        <BoxView Grid.Column="0" Color="{StaticResource Transporte}" />
+                        <Image Grid.Column="1" Source="cat_transporte.png" HeightRequest="26" Margin="14,0,0,0" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="2" Spacing="3" Padding="14,16" VerticalOptions="Center">
+                            <Label Text="Uso de bicicleta" FontAttributes="Bold" />
+                            <Label Text="5 km · 7:10 a. m." Style="{StaticResource Apoyo}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="3" Padding="0,16,16,16" Spacing="3" VerticalOptions="Center" HorizontalOptions="End">
+                            <Label Text="−1,2 kg" TextColor="{StaticResource Hoja}" FontAttributes="Bold" HorizontalTextAlignment="End" />
+                            <Label Text="con foto" Style="{StaticResource Apoyo}" HorizontalTextAlignment="End" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource Fila}">
+                    <Grid ColumnDefinitions="4,Auto,*,Auto">
+                        <BoxView Grid.Column="0" Color="{StaticResource Energia}" />
+                        <Image Grid.Column="1" Source="cat_energia.png" HeightRequest="26" Margin="14,0,0,0" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="2" Spacing="3" Padding="14,16" VerticalOptions="Center">
+                            <Label Text="Aire acondicionado apagado" FontAttributes="Bold" />
+                            <Label Text="3 h · 2:00 p. m." Style="{StaticResource Apoyo}" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="3" Text="−2,1 kg" TextColor="{StaticResource Hoja}" FontAttributes="Bold" Padding="0,16,16,16" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Label Text="Ayer" Style="{StaticResource Fecha}" />
+
+                <Border Style="{StaticResource Fila}">
+                    <Grid ColumnDefinitions="4,Auto,*,Auto">
+                        <BoxView Grid.Column="0" Color="{StaticResource Residuos}" />
+                        <Image Grid.Column="1" Source="cat_residuos.png" HeightRequest="26" Margin="14,0,0,0" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="2" Spacing="3" Padding="14,16" VerticalOptions="Center">
+                            <Label Text="Compostaje doméstico" FontAttributes="Bold" />
+                            <Label Text="2,3 kg · 6:40 p. m." Style="{StaticResource Apoyo}" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="3" Text="−0,9 kg" TextColor="{StaticResource Hoja}" FontAttributes="Bold" Padding="0,16,16,16" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource Fila}">
+                    <Grid ColumnDefinitions="4,Auto,*,Auto">
+                        <BoxView Grid.Column="0" Color="{StaticResource Transporte}" />
+                        <Image Grid.Column="1" Source="cat_transporte.png" HeightRequest="26" Margin="14,0,0,0" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="2" Spacing="3" Padding="14,16" VerticalOptions="Center">
+                            <Label Text="Viaje en metro" FontAttributes="Bold" />
+                            <Label Text="12 km · 8:05 a. m." Style="{StaticResource Apoyo}" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="3" Text="−1,8 kg" TextColor="{StaticResource Hoja}" FontAttributes="Bold" Padding="0,16,16,16" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Label Text="Viernes 25 de septiembre" Style="{StaticResource Fecha}" />
+
+                <Border Style="{StaticResource Fila}">
+                    <Grid ColumnDefinitions="4,Auto,*,Auto">
+                        <BoxView Grid.Column="0" Color="{StaticResource Residuos}" />
+                        <Image Grid.Column="1" Source="cat_residuos.png" HeightRequest="26" Margin="14,0,0,0" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="2" Spacing="3" Padding="14,16" VerticalOptions="Center">
+                            <Label Text="Separación de plásticos" FontAttributes="Bold" />
+                            <Label Text="4,2 kg · 5:20 p. m." Style="{StaticResource Apoyo}" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="3" Text="−1,4 kg" TextColor="{StaticResource Hoja}" FontAttributes="Bold" Padding="0,16,16,16" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource Fila}">
+                    <Grid ColumnDefinitions="4,Auto,*,Auto">
+                        <BoxView Grid.Column="0" Color="{StaticResource Energia}" />
+                        <Image Grid.Column="1" Source="cat_energia.png" HeightRequest="26" Margin="14,0,0,0" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="2" Spacing="3" Padding="14,16" VerticalOptions="Center">
+                            <Label Text="Cambio a bombillos LED" FontAttributes="Bold" />
+                            <Label Text="6 kWh · 11:30 a. m." Style="{StaticResource Apoyo}" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="3" Text="−2,7 kg" TextColor="{StaticResource Hoja}" FontAttributes="Bold" Padding="0,16,16,16" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Label Text="Aquí aparecerán los registros que vayas guardando."
+                       Style="{StaticResource Apoyo}"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,14,0,0" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="2"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Papel}, Dark={StaticResource PapelOscuro}}"
+                Stroke="Transparent"
+                StrokeThickness="0"
+                Padding="{OnIdiom Phone='20,8,20,16', Tablet='40,10,40,20', Desktop='40,10,40,20'}">
+            <Button Text="Registrar actividad"
+                    Style="{StaticResource BotonPrimario}"
+                    MaximumWidthRequest="820"
+                    Clicked="AlRegistrar" />
+        </Border>
+    </Grid>
+</ContentPage>

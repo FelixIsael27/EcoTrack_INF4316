@@ -3,12 +3,28 @@
     x:Class="EcoTrack.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:EcoTrack"
-    Title="EcoTrack">
+    xmlns:views="clr-namespace:EcoTrack.Views"
+    Title="EcoTrack"
+    FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <!-- Pantalla de entrada: fuera del TabBar para que no muestre pestañas -->
+    <ShellContent Route="login"
+                  Shell.NavBarIsVisible="False"
+                  Shell.TabBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:LoginPage}" />
+
+    <!-- Área principal de la app -->
+    <TabBar Route="app">
+        <Tab Title="Inicio" Icon="tab_inicio.png">
+            <ShellContent Route="inicio"
+                          Shell.NavBarIsVisible="False"
+                          ContentTemplate="{DataTemplate views:DashboardPage}" />
+        </Tab>
+        <Tab Title="Actividades" Icon="tab_historial.png">
+            <ShellContent Route="actividades"
+                          Shell.NavBarIsVisible="False"
+                          ContentTemplate="{DataTemplate views:ActivitiesPage}" />
+        </Tab>
+    </TabBar>
 
 </Shell>
