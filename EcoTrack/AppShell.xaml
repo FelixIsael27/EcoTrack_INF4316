@@ -14,7 +14,7 @@
                   ContentTemplate="{DataTemplate views:LoginPage}" />
 
     <!-- Área principal de la app -->
-    <TabBar Route="app">
+    <TabBar>
         <Tab Title="Inicio" Icon="tab_inicio.png">
             <ShellContent Route="inicio"
                           Shell.NavBarIsVisible="False"

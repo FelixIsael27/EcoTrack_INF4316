@@ -18,7 +18,7 @@ namespace EcoTrack
 public static class Rutas
 {
     public const string Login = "//login";
-    public const string Inicio = "//app/inicio";
-    public const string Actividades = "//app/actividades";
+    public const string Inicio = "//inicio";
+    public const string Actividades = "//actividades";
     public const string Formulario = "formulario";
 }
