@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="EcoTrack.csproj" />
+  <Project Path="EcoTrack.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
 </Solution>
