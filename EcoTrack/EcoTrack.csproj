@@ -85,8 +85,4 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Helpers\" />
-	</ItemGroup>
-
 </Project>
