@@ -33,7 +33,7 @@ namespace EcoTrack
         {
             FlyoutIsPresented = false;
 
-            var confirmar = await DisplayAlert("Cerrar sesión", "¿Quieres salir de tu perfil?", "Cerrar sesión", "Cancelar");
+            var confirmar = await DisplayAlertAsync("Cerrar sesión", "¿Quieres salir de tu perfil?", "Cerrar sesión", "Cancelar");
             if (!confirmar)
             {
                 return;

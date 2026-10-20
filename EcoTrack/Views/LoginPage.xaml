@@ -51,8 +51,10 @@
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Correo" Style="{StaticResource Etiqueta}" />
                         <Border Style="{StaticResource Campo}">
-                            <Entry Placeholder="tucorreo@ejemplo.com"
-                                   Keyboard="Email" />
+                            <Entry x:Name="CorreoEntry"
+                                   Placeholder="tucorreo@ejemplo.com"
+                                   Keyboard="Email"
+                                   ReturnType="Next" />
                         </Border>
                     </VerticalStackLayout>
 
@@ -60,20 +62,31 @@
                         <Label Text="Contraseña" Style="{StaticResource Etiqueta}" />
                         <Border Style="{StaticResource Campo}">
                             <Grid ColumnDefinitions="*,Auto">
-                                <Entry Grid.Column="0"
+                                <Entry x:Name="ClaveEntry"
+                                       Grid.Column="0"
                                        Placeholder="Tu contraseña"
-                                       IsPassword="True" />
-                                <Button Grid.Column="1"
+                                       IsPassword="True"
+                                       ReturnType="Done"
+                                       Completed="AlEntrar" />
+                                <Button x:Name="MostrarButton"
+                                        Grid.Column="1"
                                         Text="Mostrar"
                                         Style="{StaticResource BotonTexto}"
-                                        VerticalOptions="Center" />
+                                        VerticalOptions="Center"
+                                        Clicked="AlMostrarClave" />
                             </Grid>
                         </Border>
                     </VerticalStackLayout>
 
                     <Button Text="¿Olvidaste tu contraseña?"
                             Style="{StaticResource BotonTexto}"
-                            HorizontalOptions="End" />
+                            HorizontalOptions="End"
+                            Clicked="AlOlvideClave" />
+
+                    <!-- Mensaje de error del login (oculto hasta que haga falta) -->
+                    <Label x:Name="ErrorLabel"
+                           Style="{StaticResource MensajeError}"
+                           Margin="2,0,0,0" />
 
                     <Button Text="Entrar"
                             Style="{StaticResource BotonPrimario}"
@@ -88,9 +101,10 @@
                     </Grid>
 
                     <Button Text="Crear un perfil nuevo"
-                            Style="{StaticResource BotonSecundario}" />
+                            Style="{StaticResource BotonSecundario}"
+                            Clicked="AlCrearPerfil" />
 
-                    <Label Text="Al entrar aceptas que tus registros se guarden solo en este dispositivo."
+                    <Label Text="Por ahora tus registros se guardan solo mientras la app esté abierta."
                            Style="{StaticResource Apoyo}"
                            HorizontalTextAlignment="Center"
                            Margin="0,8,0,0" />
