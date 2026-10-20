@@ -173,11 +173,13 @@ public partial class ActivityFormPage : ContentPage
     {
         try
         {
-            var foto = await MediaPicker.Default.PickPhotoAsync(new MediaPickerOptions
+            var fotos = await MediaPicker.Default.PickPhotosAsync(new MediaPickerOptions
             {
                 Title = "Elige una foto del registro"
             });
 
+            // PickPhotosAsync devuelve una lista: usamos solo la primera foto.
+            var foto = fotos?.FirstOrDefault();
             if (foto is null)
                 return;
 
@@ -222,7 +224,7 @@ public partial class ActivityFormPage : ContentPage
         };
 
         registro.Descripcion = DescripcionEntry.Text!.Trim();
-        registro.Fecha = (DateTime)FechaPicker.Date;
+        registro.Fecha = registro.Fecha = (DateTime?)FechaPicker.Date ?? DateTime.Today;
         registro.Nota = string.IsNullOrWhiteSpace(NotaEditor.Text) ? null : NotaEditor.Text.Trim();
         registro.FotoPath = _fotoPath;
 
