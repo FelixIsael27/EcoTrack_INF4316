@@ -4,23 +4,7 @@
              x:Class="EcoTrack.Views.ActivityFormPage"
              Title="Nueva Actividad"
              Shell.NavBarIsVisible="False"
-             Shell.TabBarIsVisible="False">
-    <ContentPage.Resources>
-        <Style x:Key="ChipCategoria" TargetType="Border">
-            <Setter Property="BackgroundColor"
-                    Value="{AppThemeBinding Light={StaticResource Superficie}, Dark={StaticResource SuperficieOscura}}" />
-            <Setter Property="Stroke"
-                    Value="{AppThemeBinding Light={StaticResource Borde}, Dark={StaticResource BordeOscuro}}" />
-            <Setter Property="StrokeThickness" Value="1" />
-            <Setter Property="Padding" Value="14,12" />
-            <Setter Property="StrokeShape">
-                <Setter.Value>
-                    <RoundRectangle CornerRadius="14" />
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </ContentPage.Resources>
-
+             Shell.FlyoutBehavior="Disabled">
     <Grid RowDefinitions="Auto,*,Auto">
 
         <!-- Cabecera -->
@@ -29,7 +13,7 @@
               ColumnDefinitions="*,Auto">
             <VerticalStackLayout Grid.Column="0" Spacing="2">
                 <Label Text="Nueva actividad" Style="{StaticResource Display}" />
-                <Label Text="Anota lo que hiciste y EcoTrack calcula el ahorro." Style="{StaticResource Apoyo}" />
+                <Label Text="Los campos con * son obligatorios." Style="{StaticResource Apoyo}" />
             </VerticalStackLayout>
             <Button Grid.Column="1"
                     Text="Cerrar"
@@ -43,105 +27,133 @@
                                  Spacing="22"
                                  MaximumWidthRequest="680">
 
-                <!-- Categoría -->
+                <!-- Categoría: decide de qué entidad es el registro -->
                 <VerticalStackLayout Spacing="6">
-                    <Label Text="Categoría" Style="{StaticResource Etiqueta}" />
-                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                    <Label Text="Categoría *" Style="{StaticResource Etiqueta}" />
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
 
-                        <Border Grid.Column="0"
-                                Style="{StaticResource ChipCategoria}"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource HojaClara}, Dark=#18332A}"
-                                Stroke="{StaticResource Hoja}"
-                                StrokeThickness="2">
-                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                                <Image Source="cat_transporte.png" HeightRequest="26" />
-                                <Label Text="Transporte" FontSize="{StaticResource TxApoyo}" FontAttributes="Bold" HorizontalOptions="Center" />
-                            </VerticalStackLayout>
+                        <Border x:Name="ChipTransporte" Grid.Row="0" Grid.Column="0" Style="{StaticResource ChipCategoria}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AlElegirCategoria" CommandParameter="Transporte" />
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="10">
+                                <Image Source="cat_transporte.png" HeightRequest="24" WidthRequest="24" />
+                                <Label Text="Transporte" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
                         </Border>
 
-                        <Border Grid.Column="1" Style="{StaticResource ChipCategoria}">
-                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                                <Image Source="cat_energia.png" HeightRequest="26" />
-                                <Label Text="Energía" FontSize="{StaticResource TxApoyo}" HorizontalOptions="Center" />
-                            </VerticalStackLayout>
+                        <Border x:Name="ChipEnergia" Grid.Row="0" Grid.Column="1" Style="{StaticResource ChipCategoria}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AlElegirCategoria" CommandParameter="Energia" />
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="10">
+                                <Image Source="cat_energia.png" HeightRequest="24" WidthRequest="24" />
+                                <Label Text="Energía" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
                         </Border>
 
-                        <Border Grid.Column="2" Style="{StaticResource ChipCategoria}">
-                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                                <Image Source="cat_residuos.png" HeightRequest="26" />
-                                <Label Text="Residuos" FontSize="{StaticResource TxApoyo}" HorizontalOptions="Center" />
-                            </VerticalStackLayout>
+                        <Border x:Name="ChipResiduos" Grid.Row="1" Grid.Column="0" Style="{StaticResource ChipCategoria}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AlElegirCategoria" CommandParameter="Residuos" />
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="10">
+                                <Image Source="cat_residuos.png" HeightRequest="24" WidthRequest="24" />
+                                <Label Text="Residuos" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <Border x:Name="ChipAgua" Grid.Row="1" Grid.Column="1" Style="{StaticResource ChipCategoria}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AlElegirCategoria" CommandParameter="Agua" />
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="10">
+                                <Image Source="cat_agua.png" HeightRequest="24" WidthRequest="24" />
+                                <Label Text="Agua" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
                         </Border>
                     </Grid>
                 </VerticalStackLayout>
 
-                <!-- Descripción -->
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="Actividad" Style="{StaticResource Etiqueta}" />
+                <!-- Actividad (texto obligatorio) -->
+                <VerticalStackLayout>
+                    <Label Text="Actividad *" Style="{StaticResource Etiqueta}" />
                     <Border Style="{StaticResource Campo}">
-                        <Entry Placeholder="Ej.: Uso de bicicleta al trabajo" />
+                        <Entry x:Name="DescripcionEntry" MaxLength="60" />
+                    </Border>
+                    <Label x:Name="ErrDescripcion" Style="{StaticResource MensajeError}" />
+                </VerticalStackLayout>
+
+                <!-- Tipo (lista que cambia según la categoría) -->
+                <VerticalStackLayout>
+                    <Label x:Name="TipoLabel" Style="{StaticResource Etiqueta}" />
+                    <Border Style="{StaticResource Campo}" Padding="14,2">
+                        <Picker x:Name="TipoPicker"
+                                Title="Elige una opción"
+                                SelectedIndexChanged="AlCambiarDatos" />
+                    </Border>
+                    <Label x:Name="ErrTipo" Style="{StaticResource MensajeError}" />
+                </VerticalStackLayout>
+
+                <!-- Cantidad (número obligatorio, mayor que 0) -->
+                <VerticalStackLayout>
+                    <Label x:Name="CantidadLabel" Style="{StaticResource Etiqueta}" />
+                    <Border Style="{StaticResource Campo}">
+                        <Entry x:Name="CantidadEntry"
+                               Placeholder="0"
+                               Keyboard="Numeric"
+                               TextChanged="AlCambiarCantidad" />
+                    </Border>
+                    <Label x:Name="ErrCantidad" Style="{StaticResource MensajeError}" />
+                </VerticalStackLayout>
+
+                <!-- Fecha (no puede ser futura: se limita en el código) -->
+                <VerticalStackLayout>
+                    <Label Text="Fecha *" Style="{StaticResource Etiqueta}" />
+                    <Border Style="{StaticResource Campo}">
+                        <DatePicker x:Name="FechaPicker" Format="dd/MM/yyyy" VerticalOptions="Center" />
                     </Border>
                 </VerticalStackLayout>
 
-                <!-- Cantidad y unidad -->
+                <!-- Foto (opcional) -->
                 <VerticalStackLayout Spacing="6">
-                    <Label Text="Impacto registrado" Style="{StaticResource Etiqueta}" />
-                    <Grid ColumnDefinitions="*,140" ColumnSpacing="10">
-                        <Border Grid.Column="0" Style="{StaticResource Campo}">
-                            <Entry Placeholder="0" Keyboard="Numeric" />
-                        </Border>
-                        <Border Grid.Column="1" Style="{StaticResource Campo}" Padding="10,2">
-                            <Picker Title="Unidad" SelectedIndex="0">
-                                <Picker.ItemsSource>
-                                    <x:Array Type="{x:Type x:String}">
-                                        <x:String>km recorridos</x:String>
-                                        <x:String>kWh ahorrados</x:String>
-                                        <x:String>kg reciclados</x:String>
-                                        <x:String>horas</x:String>
-                                    </x:Array>
-                                </Picker.ItemsSource>
-                            </Picker>
-                        </Border>
-                    </Grid>
-                    <Label Text="Usa la unidad que corresponda a la categoría elegida."
-                           Style="{StaticResource Apoyo}"
-                           Margin="2,2,0,0" />
-                </VerticalStackLayout>
-
-                <!-- Fecha -->
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="Fecha" Style="{StaticResource Etiqueta}" />
-                    <Border Style="{StaticResource Campo}">
-                        <DatePicker Format="dd/MM/yyyy" VerticalOptions="Center" />
-                    </Border>
-                </VerticalStackLayout>
-
-                <!-- Foto -->
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="Foto del registro" Style="{StaticResource Etiqueta}" />
+                    <Label Text="Foto del registro (opcional)" Style="{StaticResource Etiqueta}" />
                     <Border BackgroundColor="{AppThemeBinding Light={StaticResource Superficie}, Dark={StaticResource SuperficieOscura}}"
                             Stroke="{AppThemeBinding Light={StaticResource Borde}, Dark={StaticResource BordeOscuro}}"
                             StrokeThickness="1.5"
                             StrokeDashArray="8,5"
                             StrokeDashOffset="0"
-                            Padding="20"
+                            Padding="0"
                             HeightRequest="150">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
-                        <VerticalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
-                            <Image Source="camara.png" HeightRequest="30" />
-                            <Label Text="Añade una foto de la actividad" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <Label Text="Toma una foto o elige una de tu galería" Style="{StaticResource Apoyo}" HorizontalTextAlignment="Center" />
-                        </VerticalStackLayout>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="AlElegirFoto" />
+                        </Border.GestureRecognizers>
+                        <Grid>
+                            <VerticalStackLayout x:Name="FotoVacia" Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Image Source="camara.png" HeightRequest="30" />
+                                <Label Text="Añade una foto de la actividad" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                <Label Text="Elige una imagen de tu galería" Style="{StaticResource Apoyo}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                            <Image x:Name="FotoPreview" Aspect="AspectFill" IsVisible="False" />
+                        </Grid>
                     </Border>
+                    <Button x:Name="QuitarFotoButton"
+                            Text="Quitar foto"
+                            Style="{StaticResource BotonTexto}"
+                            HorizontalOptions="End"
+                            IsVisible="False"
+                            Clicked="AlQuitarFoto" />
                 </VerticalStackLayout>
 
-                <!-- Nota -->
+                <!-- Nota (opcional) -->
                 <VerticalStackLayout Spacing="6">
                     <Label Text="Nota (opcional)" Style="{StaticResource Etiqueta}" />
                     <Border Style="{StaticResource Campo}" Padding="12,6">
-                        <Editor Placeholder="Algún detalle que quieras recordar"
+                        <Editor x:Name="NotaEditor"
+                                Placeholder="Algún detalle que quieras recordar"
+                                MaxLength="200"
                                 HeightRequest="90" />
                     </Border>
                 </VerticalStackLayout>
@@ -151,9 +163,10 @@
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                         <VerticalStackLayout Grid.Column="0" Spacing="4">
                             <Label Text="Ahorro estimado" Style="{StaticResource ApoyoClaro}" />
-                            <Label Text="Se calcula al guardar" TextColor="{StaticResource Blanco}" FontAttributes="Bold" />
+                            <Label Text="Se calcula con tu tipo y cantidad" TextColor="{StaticResource Blanco}" FontAttributes="Bold" />
                         </VerticalStackLayout>
-                        <Label Grid.Column="1"
+                        <Label x:Name="AhorroLabel"
+                               Grid.Column="1"
                                Text="— kg CO₂"
                                TextColor="{StaticResource Lima}"
                                FontSize="{StaticResource TxSubtitulo}"
@@ -178,7 +191,8 @@
                         Clicked="AlCerrar" />
                 <Button Grid.Column="1"
                         Text="Guardar actividad"
-                        Style="{StaticResource BotonPrimario}" />
+                        Style="{StaticResource BotonPrimario}"
+                        Clicked="AlGuardar" />
             </Grid>
         </Border>
     </Grid>
