@@ -1,15 +1,47 @@
-﻿using EcoTrack.Views;
+﻿using EcoTrack.Services;
+using EcoTrack.Views;
 
 namespace EcoTrack
 {
     public partial class AppShell : Shell
     {
-        public AppShell()
+        private readonly IAuthService _auth;
+
+        public AppShell(IAuthService auth)
         {
             InitializeComponent();
+            _auth = auth;
 
-            // El formulario se abre sobre la pestaña activa, no vive en el TabBar.
+            // El formulario se abre sobre la pantalla actual, no vive en el menú.
             Routing.RegisterRoute(Rutas.Formulario, typeof(ActivityFormPage));
+        }
+
+        private async void AlRegistrar(object? sender, EventArgs e)
+        {
+            FlyoutIsPresented = false;
+
+            // Evita abrir dos formularios apilados si ya estás en uno.
+            if (CurrentState.Location.OriginalString.Contains(Rutas.Formulario))
+            {
+                return;
+            }
+
+            await GoToAsync(Rutas.Formulario);
+        }
+
+        private async void AlCerrarSesion(object? sender, EventArgs e)
+        {
+            FlyoutIsPresented = false;
+
+            var confirmar = await DisplayAlert("Cerrar sesión", "¿Quieres salir de tu perfil?", "Cerrar sesión", "Cancelar");
+            if (!confirmar)
+            {
+                return;
+            }
+
+            _auth.CerrarSesion();
+            FlyoutBehavior = FlyoutBehavior.Disabled;   // el menú vuelve a desaparecer
+            await GoToAsync(Rutas.Login);
         }
     }
 }

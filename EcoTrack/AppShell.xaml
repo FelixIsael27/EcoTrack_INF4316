@@ -5,26 +5,82 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:EcoTrack.Views"
     Title="EcoTrack"
-    FlyoutBehavior="Disabled">
+    FlyoutBehavior="Disabled"
+    FlyoutHeaderBehavior="Fixed"
+    FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource Superficie}, Dark={StaticResource SuperficieOscura}}">
 
-    <!-- Pantalla de entrada: fuera del TabBar para que no muestre pestañas -->
+    <!-- Cabecera del menú lateral -->
+    <Shell.FlyoutHeader>
+        <Grid BackgroundColor="{StaticResource Pino}"
+              Padding="24,56,24,24"
+              ColumnDefinitions="Auto,*"
+              ColumnSpacing="14">
+            <Image Source="marca.png" HeightRequest="40" WidthRequest="40" />
+            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                <Label Text="EcoTrack" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Blanco}" />
+                <Label Text="Tu huella, bajo control" FontSize="13" TextColor="#A9C3B4" />
+            </VerticalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <!-- Cómo se dibuja cada opción del menú (Incluso resaltando la opción que este activa) -->
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16" Padding="22,0" HeightRequest="54">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="{AppThemeBinding Light={StaticResource HojaClara}, Dark={StaticResource PinoSuave}}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+                <Image Source="{Binding FlyoutIcon}" HeightRequest="22" WidthRequest="22" VerticalOptions="Center" />
+                <Label Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold" VerticalOptions="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16" Padding="22,0" HeightRequest="54">
+                <Image Source="{Binding IconImageSource}" HeightRequest="22" WidthRequest="22" VerticalOptions="Center" />
+                <Label Grid.Column="1" Text="{Binding Text}" FontAttributes="Bold" VerticalOptions="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
+
+    <!-- 1) Login: no aparece en el menú -->
     <ShellContent Route="login"
+                  Title="Iniciar sesión"
+                  FlyoutItemIsVisible="False"
                   Shell.NavBarIsVisible="False"
-                  Shell.TabBarIsVisible="False"
                   ContentTemplate="{DataTemplate views:LoginPage}" />
 
-    <!-- Área principal de la app -->
-    <TabBar>
-        <Tab Title="Inicio" Icon="tab_inicio.png">
-            <ShellContent Route="inicio"
-                          Shell.NavBarIsVisible="False"
-                          ContentTemplate="{DataTemplate views:DashboardPage}" />
-        </Tab>
-        <Tab Title="Actividades" Icon="tab_historial.png">
-            <ShellContent Route="actividades"
-                          Shell.NavBarIsVisible="False"
-                          ContentTemplate="{DataTemplate views:ActivitiesPage}" />
-        </Tab>
-    </TabBar>
+    <!-- 2) y 3) Pantallas principales: aparecen en el menú lateral -->
+    <ShellContent Route="inicio"
+                  Title="Inicio"
+                  Icon="tab_inicio.png"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:DashboardPage}" />
 
+    <ShellContent Route="actividades"
+                  Title="Mis actividades"
+                  Icon="tab_historial.png"
+                  Shell.NavBarIsVisible="False"
+                  ContentTemplate="{DataTemplate views:ActivitiesPage}" />
+
+    <!-- 4) Formulario (se abre encima) y cierre de sesión -->
+    <MenuItem Text="Registrar actividad"
+              IconImageSource="agregar.png"
+              Clicked="AlRegistrar" />
+
+    <MenuItem Text="Cerrar sesión"
+              IconImageSource="salir.png"
+              Clicked="AlCerrarSesion" />
 </Shell>

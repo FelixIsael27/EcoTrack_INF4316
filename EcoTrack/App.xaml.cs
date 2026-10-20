@@ -4,14 +4,18 @@ namespace EcoTrack
 {
     public partial class App : Application
     {
-        public App()
+        private readonly IServiceProvider _servicios;
+
+        public App(IServiceProvider servicios)
         {
             InitializeComponent();
+            _servicios = servicios;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell()) { Title = "EcoTrack" };
+            var shell = _servicios.GetRequiredService<AppShell>();
+            return new Window(shell) { Title = "EcoTrack" };
         }
     }
 }
