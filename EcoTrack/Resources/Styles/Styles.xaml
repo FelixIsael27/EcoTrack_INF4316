@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:EcoTrack.Helpers">
 
     <!-- ===================== Escala tipográfica ===================== -->
     <x:Double x:Key="TxCifra">42</x:Double>
@@ -204,4 +205,106 @@
         <Setter Property="Color" Value="{StaticResource Hoja}" />
     </Style>
 
+    <!-- ===================== Mensajes, Chips y Filas ===================== -->
+    <Style x:Key="MensajeError" TargetType="Label">
+        <Setter Property="FontSize" Value="{StaticResource TxApoyo}" />
+        <Setter Property="TextColor"
+                Value="{AppThemeBinding Light={StaticResource Alerta}, Dark={StaticResource AlertaClara}}" />
+        <Setter Property="IsVisible" Value="False" />
+        <Setter Property="Margin" Value="2,6,0,0" />
+    </Style>
+
+    <!-- Fila del historial -->
+    <Style x:Key="Fila" TargetType="Border">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource Superficie}, Dark={StaticResource SuperficieOscura}}" />
+        <Setter Property="Stroke"
+                Value="{AppThemeBinding Light={StaticResource Borde}, Dark={StaticResource BordeOscuro}}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="14" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Chips de filtro del listado (normal / activo) -->
+    <Style x:Key="ChipFiltro" TargetType="Border">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource Superficie}, Dark={StaticResource SuperficieOscura}}" />
+        <Setter Property="Stroke"
+                Value="{AppThemeBinding Light={StaticResource Borde}, Dark={StaticResource BordeOscuro}}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="16,9" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="20" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ChipFiltroActivo" TargetType="Border" BasedOn="{StaticResource ChipFiltro}">
+        <Setter Property="BackgroundColor" Value="{StaticResource Hoja}" />
+        <Setter Property="Stroke" Value="{StaticResource Hoja}" />
+    </Style>
+
+    <Style x:Key="ChipTexto" TargetType="Label">
+        <Setter Property="FontSize" Value="{StaticResource TxApoyo}" />
+        <Setter Property="TextColor"
+                Value="{AppThemeBinding Light={StaticResource Tinta}, Dark={StaticResource TintaClara}}" />
+    </Style>
+
+    <Style x:Key="ChipTextoActivo" TargetType="Label">
+        <Setter Property="FontSize" Value="{StaticResource TxApoyo}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource Blanco}" />
+    </Style>
+
+    <!-- Chips de categoría del formulario (normal / activo) -->
+    <Style x:Key="ChipCategoria" TargetType="Border">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource Superficie}, Dark={StaticResource SuperficieOscura}}" />
+        <Setter Property="Stroke"
+                Value="{AppThemeBinding Light={StaticResource Borde}, Dark={StaticResource BordeOscuro}}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="14,12" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="14" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ChipCategoriaActivo" TargetType="Border" BasedOn="{StaticResource ChipCategoria}">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource HojaClara}, Dark=#18332A}" />
+        <Setter Property="Stroke" Value="{StaticResource Hoja}" />
+        <Setter Property="StrokeThickness" Value="2" />
+    </Style>
+
+    <!-- Plantilla de una fila de registro: la usan el listado y el inicio -->
+    <DataTemplate x:Key="RegistroTemplate" x:DataType="helpers:RegistroVista">
+        <Border Style="{StaticResource Fila}">
+            <Grid ColumnDefinitions="4,Auto,*,Auto">
+                <BoxView Grid.Column="0" Color="{Binding ColorCategoria}" />
+                <Image Grid.Column="1"
+                       Source="{Binding Icono}"
+                       HeightRequest="26"
+                       WidthRequest="26"
+                       Margin="14,0,0,0"
+                       VerticalOptions="Center" />
+                <VerticalStackLayout Grid.Column="2" Spacing="3" Padding="14,14" VerticalOptions="Center">
+                    <Label Text="{Binding Titulo}" FontAttributes="Bold" LineBreakMode="TailTruncation" />
+                    <Label Text="{Binding Subtitulo}" Style="{StaticResource Apoyo}" LineBreakMode="TailTruncation" />
+                </VerticalStackLayout>
+                <Label Grid.Column="3"
+                       Text="{Binding Impacto}"
+                       TextColor="{StaticResource Hoja}"
+                       FontAttributes="Bold"
+                       Padding="0,0,16,0"
+                       VerticalOptions="Center" />
+            </Grid>
+        </Border>
+    </DataTemplate>
 </ResourceDictionary>

@@ -27,6 +27,7 @@
     <Color x:Key="Tinta">#12241D</Color>
     <Color x:Key="TintaSuave">#5D6E66</Color>
     <Color x:Key="Alerta">#B3402F</Color>
+    <Color x:Key="AlertaClara">#F0907F</Color>
 
     <!-- Modo oscuro -->
     <Color x:Key="PapelOscuro">#0B1712</Color>
