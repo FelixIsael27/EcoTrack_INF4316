@@ -13,41 +13,44 @@
                   RowSpacing="22"
                   RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
 
-                <!-- Cabecera: menú + saludo + avatar -->
-                <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="14">
-                    <ImageButton Grid.Column="0"
-                                 Source="menu.png"
-                                 WidthRequest="40"
-                                 HeightRequest="40"
-                                 Padding="8"
-                                 BackgroundColor="Transparent"
-                                 VerticalOptions="Start"
-                                 SemanticProperties.Description="Abrir menú"
-                                 Clicked="AlAbrirMenu" />
-                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                <!-- Cabecera: fila 1 = menú y avatar, fila 2 = saludo -->
+                <VerticalStackLayout Grid.Row="0" Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <ImageButton Grid.Column="0"
+                                     Source="menu.png"
+                                     WidthRequest="40"
+                                     HeightRequest="40"
+                                     Padding="8"
+                                     BackgroundColor="Transparent"
+                                     HorizontalOptions="Start"
+                                     SemanticProperties.Description="Abrir menú"
+                                     Clicked="AlAbrirMenu" />
+
+                        <Border Grid.Column="1"
+                                BackgroundColor="{StaticResource HojaClara}"
+                                Stroke="Transparent"
+                                HeightRequest="46"
+                                WidthRequest="46"
+                                Padding="0"
+                                VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="23" />
+                            </Border.StrokeShape>
+                            <Label x:Name="AvatarLabel"
+                                   Text="A"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource Hoja}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+
+                    <VerticalStackLayout Spacing="2">
                         <Label x:Name="SaludoLabel" Text="Hola" Style="{StaticResource Display}" />
                         <Label x:Name="FechaLabel" Style="{StaticResource Apoyo}" />
                     </VerticalStackLayout>
-
-                    <Border Grid.Column="2"
-                            BackgroundColor="{StaticResource HojaClara}"
-                            Stroke="Transparent"
-                            HeightRequest="46"
-                            WidthRequest="46"
-                            Padding="0"
-                            VerticalOptions="Start">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="23" />
-                        </Border.StrokeShape>
-                        <Label x:Name="AvatarLabel"
-                               Text="A"
-                               FontSize="18"
-                               FontAttributes="Bold"
-                               TextColor="{StaticResource Hoja}"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
-                    </Border>
-                </Grid>
+                </VerticalStackLayout>
 
                 <!-- Dato principal de la semana -->
                 <Border Grid.Row="1" Style="{StaticResource Panel}">

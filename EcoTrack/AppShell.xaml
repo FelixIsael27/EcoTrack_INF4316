@@ -49,7 +49,7 @@
     <Shell.MenuItemTemplate>
         <DataTemplate>
             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16" Padding="22,0" HeightRequest="54">
-                <Image Source="{Binding IconImageSource}" HeightRequest="22" WidthRequest="22" VerticalOptions="Center" />
+                <Image Source="{Binding Icon}" HeightRequest="22" WidthRequest="22" VerticalOptions="Center" />
                 <Label Grid.Column="1" Text="{Binding Text}" FontAttributes="Bold" VerticalOptions="Center" />
             </Grid>
         </DataTemplate>
