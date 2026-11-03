@@ -1,5 +1,6 @@
 ﻿using EcoTrack.Services;
 using EcoTrack.Views;
+using EcoTrack.ViewsModels;
 using Microsoft.Extensions.Logging;
 
 namespace EcoTrack
