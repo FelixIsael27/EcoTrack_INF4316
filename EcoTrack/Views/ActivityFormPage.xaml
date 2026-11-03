@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:EcoTrack.ViewsModels"
              x:Class="EcoTrack.Views.ActivityFormPage"
+             x:DataType="vm:ActivityFormViewModel"
              Title="Nueva Actividad"
              Shell.NavBarIsVisible="False"
              Shell.FlyoutBehavior="Disabled">
+
     <Grid RowDefinitions="Auto,*,Auto">
 
         <!-- Cabecera -->
@@ -19,7 +22,7 @@
                     Text="Cerrar"
                     Style="{StaticResource BotonTexto}"
                     VerticalOptions="Start"
-                    Clicked="AlCerrar" />
+                    Command="{Binding CerrarCommand}" />
         </Grid>
 
         <ScrollView Grid.Row="1">
@@ -27,45 +30,73 @@
                                  Spacing="22"
                                  MaximumWidthRequest="680">
 
-                <!-- Categoría: decide de qué entidad es el registro -->
+                <!-- Categoría: elige cuál de los 4 formularios se muestra -->
                 <VerticalStackLayout Spacing="6">
                     <Label Text="Categoría *" Style="{StaticResource Etiqueta}" />
                     <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
 
-                        <Border x:Name="ChipTransporte" Grid.Row="0" Grid.Column="0" Style="{StaticResource ChipCategoria}">
+                        <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource ChipCategoria}">
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="AlElegirCategoria" CommandParameter="Transporte" />
+                                <TapGestureRecognizer Command="{Binding SeleccionarCategoriaCommand}" CommandParameter="Transporte" />
                             </Border.GestureRecognizers>
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding EsTransporte}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource HojaClara}, Dark=#18332A}" />
+                                    <Setter Property="Stroke" Value="{StaticResource Hoja}" />
+                                    <Setter Property="StrokeThickness" Value="2" />
+                                </DataTrigger>
+                            </Border.Triggers>
                             <HorizontalStackLayout Spacing="10">
                                 <Image Source="cat_transporte.png" HeightRequest="24" WidthRequest="24" />
                                 <Label Text="Transporte" VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </Border>
 
-                        <Border x:Name="ChipEnergia" Grid.Row="0" Grid.Column="1" Style="{StaticResource ChipCategoria}">
+                        <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource ChipCategoria}">
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="AlElegirCategoria" CommandParameter="Energia" />
+                                <TapGestureRecognizer Command="{Binding SeleccionarCategoriaCommand}" CommandParameter="Energia" />
                             </Border.GestureRecognizers>
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding EsEnergia}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource HojaClara}, Dark=#18332A}" />
+                                    <Setter Property="Stroke" Value="{StaticResource Hoja}" />
+                                    <Setter Property="StrokeThickness" Value="2" />
+                                </DataTrigger>
+                            </Border.Triggers>
                             <HorizontalStackLayout Spacing="10">
                                 <Image Source="cat_energia.png" HeightRequest="24" WidthRequest="24" />
                                 <Label Text="Energía" VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </Border>
 
-                        <Border x:Name="ChipResiduos" Grid.Row="1" Grid.Column="0" Style="{StaticResource ChipCategoria}">
+                        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource ChipCategoria}">
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="AlElegirCategoria" CommandParameter="Residuos" />
+                                <TapGestureRecognizer Command="{Binding SeleccionarCategoriaCommand}" CommandParameter="Residuos" />
                             </Border.GestureRecognizers>
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding EsResiduos}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource HojaClara}, Dark=#18332A}" />
+                                    <Setter Property="Stroke" Value="{StaticResource Hoja}" />
+                                    <Setter Property="StrokeThickness" Value="2" />
+                                </DataTrigger>
+                            </Border.Triggers>
                             <HorizontalStackLayout Spacing="10">
                                 <Image Source="cat_residuos.png" HeightRequest="24" WidthRequest="24" />
                                 <Label Text="Residuos" VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </Border>
 
-                        <Border x:Name="ChipAgua" Grid.Row="1" Grid.Column="1" Style="{StaticResource ChipCategoria}">
+                        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ChipCategoria}">
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="AlElegirCategoria" CommandParameter="Agua" />
+                                <TapGestureRecognizer Command="{Binding SeleccionarCategoriaCommand}" CommandParameter="Agua" />
                             </Border.GestureRecognizers>
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding EsAgua}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource HojaClara}, Dark=#18332A}" />
+                                    <Setter Property="Stroke" Value="{StaticResource Hoja}" />
+                                    <Setter Property="StrokeThickness" Value="2" />
+                                </DataTrigger>
+                            </Border.Triggers>
                             <HorizontalStackLayout Spacing="10">
                                 <Image Source="cat_agua.png" HeightRequest="24" WidthRequest="24" />
                                 <Label Text="Agua" VerticalOptions="Center" />
@@ -74,44 +105,57 @@
                     </Grid>
                 </VerticalStackLayout>
 
-                <!-- Actividad (texto obligatorio) -->
+                <!-- Actividad -->
                 <VerticalStackLayout>
                     <Label Text="Actividad *" Style="{StaticResource Etiqueta}" />
                     <Border Style="{StaticResource Campo}">
-                        <Entry x:Name="DescripcionEntry" MaxLength="60" />
+                        <Entry Text="{Binding Actual.Descripcion}"
+                               Placeholder="{Binding Actual.PlaceholderDescripcion}" />
                     </Border>
-                    <Label x:Name="ErrDescripcion" Style="{StaticResource MensajeError}" />
+                    <Label Text="{Binding Actual.ErrorDescripcion}"
+                           IsVisible="{Binding Actual.TieneErrorDescripcion}"
+                           Style="{StaticResource MensajeError}" />
                 </VerticalStackLayout>
 
-                <!-- Tipo (lista que cambia según la categoría) -->
+                <!-- Tipo (la etiqueta y las opciones cambian con la categoría) -->
                 <VerticalStackLayout>
-                    <Label x:Name="TipoLabel" Style="{StaticResource Etiqueta}" />
+                    <Label Text="{Binding Actual.EtiquetaTipo}" Style="{StaticResource Etiqueta}" />
                     <Border Style="{StaticResource Campo}" Padding="14,2">
-                        <Picker x:Name="TipoPicker"
-                                Title="Elige una opción"
-                                SelectedIndexChanged="AlCambiarDatos" />
+                        <Picker Title="Elige una opción"
+                                ItemsSource="{Binding Actual.OpcionesTipo}"
+                                SelectedItem="{Binding Actual.Tipo}" />
                     </Border>
-                    <Label x:Name="ErrTipo" Style="{StaticResource MensajeError}" />
+                    <Label Text="{Binding Actual.ErrorTipo}"
+                           IsVisible="{Binding Actual.TieneErrorTipo}"
+                           Style="{StaticResource MensajeError}" />
                 </VerticalStackLayout>
 
-                <!-- Cantidad (número obligatorio, mayor que 0) -->
+                <!-- Cantidad -->
                 <VerticalStackLayout>
-                    <Label x:Name="CantidadLabel" Style="{StaticResource Etiqueta}" />
+                    <Label Text="{Binding Actual.EtiquetaCantidad}" Style="{StaticResource Etiqueta}" />
                     <Border Style="{StaticResource Campo}">
-                        <Entry x:Name="CantidadEntry"
+                        <Entry Text="{Binding Actual.Cantidad}"
                                Placeholder="0"
-                               Keyboard="Numeric"
-                               TextChanged="AlCambiarCantidad" />
+                               Keyboard="Numeric" />
                     </Border>
-                    <Label x:Name="ErrCantidad" Style="{StaticResource MensajeError}" />
+                    <Label Text="{Binding Actual.ErrorCantidad}"
+                           IsVisible="{Binding Actual.TieneErrorCantidad}"
+                           Style="{StaticResource MensajeError}" />
                 </VerticalStackLayout>
 
-                <!-- Fecha (no puede ser futura: se limita en el código) -->
+                <!-- Fecha -->
                 <VerticalStackLayout>
                     <Label Text="Fecha *" Style="{StaticResource Etiqueta}" />
                     <Border Style="{StaticResource Campo}">
-                        <DatePicker x:Name="FechaPicker" Format="dd/MM/yyyy" VerticalOptions="Center" />
+                        <DatePicker Date="{Binding Actual.Fecha}"
+                                    MinimumDate="{Binding Actual.FechaMinima}"
+                                    MaximumDate="{Binding Actual.FechaMaxima}"
+                                    Format="dd/MM/yyyy"
+                                    VerticalOptions="Center" />
                     </Border>
+                    <Label Text="{Binding Actual.ErrorFecha}"
+                           IsVisible="{Binding Actual.TieneErrorFecha}"
+                           Style="{StaticResource MensajeError}" />
                 </VerticalStackLayout>
 
                 <!-- Foto (opcional) -->
@@ -128,34 +172,43 @@
                             <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="AlElegirFoto" />
+                            <TapGestureRecognizer Command="{Binding Actual.ElegirFotoCommand}" />
                         </Border.GestureRecognizers>
                         <Grid>
-                            <VerticalStackLayout x:Name="FotoVacia" Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                            <VerticalStackLayout Spacing="8"
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="Center"
+                                                 IsVisible="{Binding Actual.SinFoto}">
                                 <Image Source="camara.png" HeightRequest="30" />
                                 <Label Text="Añade una foto de la actividad" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                                 <Label Text="Elige una imagen de tu galería" Style="{StaticResource Apoyo}" HorizontalTextAlignment="Center" />
                             </VerticalStackLayout>
-                            <Image x:Name="FotoPreview" Aspect="AspectFill" IsVisible="False" />
+                            <Image Source="{Binding Actual.FotoSource}"
+                                   Aspect="AspectFill"
+                                   IsVisible="{Binding Actual.TieneFoto}" />
                         </Grid>
                     </Border>
-                    <Button x:Name="QuitarFotoButton"
-                            Text="Quitar foto"
+                    <Button Text="Quitar foto"
                             Style="{StaticResource BotonTexto}"
                             HorizontalOptions="End"
-                            IsVisible="False"
-                            Clicked="AlQuitarFoto" />
+                            IsVisible="{Binding Actual.TieneFoto}"
+                            Command="{Binding Actual.QuitarFotoCommand}" />
+                    <Label Text="{Binding Actual.ErrorFoto}"
+                           IsVisible="{Binding Actual.TieneErrorFoto}"
+                           Style="{StaticResource MensajeError}" />
                 </VerticalStackLayout>
 
                 <!-- Nota (opcional) -->
-                <VerticalStackLayout Spacing="6">
+                <VerticalStackLayout>
                     <Label Text="Nota (opcional)" Style="{StaticResource Etiqueta}" />
                     <Border Style="{StaticResource Campo}" Padding="12,6">
-                        <Editor x:Name="NotaEditor"
+                        <Editor Text="{Binding Actual.Nota}"
                                 Placeholder="Algún detalle que quieras recordar"
-                                MaxLength="200"
                                 HeightRequest="90" />
                     </Border>
+                    <Label Text="{Binding Actual.ErrorNota}"
+                           IsVisible="{Binding Actual.TieneErrorNota}"
+                           Style="{StaticResource MensajeError}" />
                 </VerticalStackLayout>
 
                 <!-- Vista previa del cálculo -->
@@ -165,9 +218,8 @@
                             <Label Text="Ahorro estimado" Style="{StaticResource ApoyoClaro}" />
                             <Label Text="Se calcula con tu tipo y cantidad" TextColor="{StaticResource Blanco}" FontAttributes="Bold" />
                         </VerticalStackLayout>
-                        <Label x:Name="AhorroLabel"
-                               Grid.Column="1"
-                               Text="— kg CO₂"
+                        <Label Grid.Column="1"
+                               Text="{Binding Actual.AhorroTexto}"
                                TextColor="{StaticResource Lima}"
                                FontSize="{StaticResource TxSubtitulo}"
                                FontAttributes="Bold"
@@ -185,14 +237,14 @@
                 Padding="{OnIdiom Phone='20,8,20,16', Tablet='40,10,40,20', Desktop='40,10,40,20'}">
             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" MaximumWidthRequest="680">
                 <Button Grid.Column="0"
-                        Text="Cancelar"
+                        Text="Cerrar"
                         Style="{StaticResource BotonSecundario}"
                         WidthRequest="120"
-                        Clicked="AlCerrar" />
+                        Command="{Binding CerrarCommand}" />
                 <Button Grid.Column="1"
                         Text="Guardar actividad"
                         Style="{StaticResource BotonPrimario}"
-                        Clicked="AlGuardar" />
+                        Command="{Binding Actual.GuardarCommand}" />
             </Grid>
         </Border>
     </Grid>
