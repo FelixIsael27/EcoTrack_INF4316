@@ -14,6 +14,15 @@ namespace EcoTrack
             // Servicios: una sola instancia para toda la app, así los datos se comparten entre pantallas.
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddSingleton<IRegistroService, RegistroService>();
+            builder.Services.AddSingleton<IDialogService, DialogService>();
+            builder.Services.AddSingleton<INavegacionService, NavegacionService>();
+
+            // ViewModels del formulario: uno por entidad y uno para la pantalla.
+            builder.Services.AddTransient<TransporteViewModel>();
+            builder.Services.AddTransient<EnergiaViewModel>();
+            builder.Services.AddTransient<ReciclajeViewModel>();
+            builder.Services.AddTransient<AguaViewModel>();
+            builder.Services.AddTransient<ActivityFormViewModel>();
 
             // Shell y páginas: el contenedor les inyecta los servicios por constructor.
             builder.Services.AddTransient<AppShell>();
